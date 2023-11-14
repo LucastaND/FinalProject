@@ -35,8 +35,8 @@ export const ForgetForm = () => {
   });
 
   return (
-    <section>
-      <div className="wrapper">
+    <section className="section-form">
+      <div className="wrapper-form">
         <div className="inforform">
           <form onSubmit={formik.handleSubmit}>
             <h2 className="title"> Find Your Account </h2>

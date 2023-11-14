@@ -7,7 +7,7 @@ import Home from "./page/Home";
 import ForgetForm from "./components/ForgetForm";
 import ProjectTopic from "./page/ProjectTopic";
 import Condition from "./page/Condition";
-import TopicRegistration from "./page/TopicRegistration";
+import ProjectRegistration from "./page/ProjectRegistration";
 import SidebarMenu from "./components/Sidebar";
 import NewFeed from "./page/NewFeed";
 
@@ -26,7 +26,10 @@ function App() {
             <Route path="/forget" element={<ForgetForm />} />
             <Route path="/projecttopic" element={<ProjectTopic />} />
             <Route path="/condition" element={<Condition />} />
-            <Route path="/topicregistration" element={<TopicRegistration />} />
+            <Route
+              path="/projectregistration"
+              element={<ProjectRegistration />}
+            />
             <Route path="/newfeed" element={<NewFeed />} />
           </Routes>
         </SidebarMenu>

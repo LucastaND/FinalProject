@@ -23,8 +23,8 @@ const SidebarMenu = ({ children }) => {
       icon: <ion-icon name="folder-open-outline"></ion-icon>,
     },
     {
-      path: "/topicregistration",
-      name: "Topic Registration",
+      path: "/projectregistration",
+      name: "Project Registration",
       icon: <ion-icon name="add-circle-outline"></ion-icon>,
     },
     {

@@ -15,7 +15,7 @@ const Home = () => {
               setAction("Overview");
             }}
           >
-            OverView
+            <p> OverView</p>
           </button>
           <button
             className={action === "Overview" ? "submit gray" : "submit"}
@@ -23,7 +23,7 @@ const Home = () => {
               setAction("Lecturer");
             }}
           >
-            Lecturer
+            <p> Lecturer</p>
           </button>
         </div>
       </div>

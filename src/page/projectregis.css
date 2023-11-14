@@ -1,0 +1,78 @@
+.section-registopic {
+  position: absolute;
+  margin: 0px;
+  padding: 0;
+  text-decoration: none;
+  background: #f5fffa;
+  width: 90%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.wrapper-registopic {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.registopic-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  width: 100%;
+}
+
+.wrapper-registopic .regisropic-form {
+  width: 100%;
+  padding: 10px;
+}
+
+.regis-title {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #000;
+  text-align: center;
+  width: 100%;
+  margin: 0 0 0px;
+}
+
+.input-box {
+  position: relative;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-box label {
+  top: 50%;
+  left: 5px;
+  color: #000;
+  font-size: 1.2em;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.input-box input {
+  width: 80%;
+  height: 35px;
+  border: 1px solid;
+  border-radius: 10px;
+  align-self: center;
+  outline: none;
+  font-size: 1em;
+}
+
+.btn-addmb,
+.btn-regis {
+  background: #50ce7a;
+  border: 1px solid #000;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 15%;
+  height: 35px;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+}
