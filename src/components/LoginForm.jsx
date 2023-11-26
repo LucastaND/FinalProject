@@ -1,81 +1,80 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import "./form.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
+import "./form.css";
 
 const LoginForm = () => {
   const [passwordVisible, setPasswordvisible] = useState(false);
+  const { dispatch } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .required("Required")
-        .matches(
-          /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-          "Please enter a valid email address"
-        ),
-      password: Yup.string()
-        .required("Required")
-        .matches(
-          /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$/,
-          "Please enter the password"
-        ),
-    }),
-    onSubmit: (values) => {
-      window.alert("Form submitted");
-      console.log(values);
-    },
-  });
+  const navigate = useNavigate(); // Import useNavigate
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behaviorZ
+
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/nguoi-dung/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (response.ok) {
+        const userData = await response.json();
+        dispatch({ type: "LOGIN", payload: userData });
+        navigate("/home"); // Use navigate for redirection
+      } else {
+        // Xử lý lỗi xác thực
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
 
   return (
     <section className="section-form">
       <div className="wrapper-form">
         <div className="inforform">
-          <form onSubmit={formik.handleSubmit}>
+          <form>
             <div>
               <h1 className="title-form"> Login </h1>
             </div>
             <div className="inputbox">
               <label htmlFor="email">Email address</label>
               <input
-                value={formik.values.email}
-                onChange={formik.handleChange}
                 type="email"
-                placeholder="Youremail@gmail.com"
+                placeholder="Email Address"
                 id="email"
                 name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              {formik.errors.email && (
-                <p className="errorMsg"> {formik.errors.email} </p>
-              )}
             </div>
             <div className="inputbox">
               <label htmlfor="password">Password</label>
-              <div className="password-input">
-                <input
-                  className="password-input-field"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  type={passwordVisible ? "text" : "password"}
-                  placeholder="Enter your Password"
-                  id="password"
-                  name="password"
-                />
-                <button
-                  className="toggle-password"
-                  onClick={() => setPasswordvisible(!passwordVisible)}
-                >
-                  {passwordVisible ? "Hide" : "Show"}
-                </button>
-                {formik.errors.password && (
-                  <p className="errorMsg"> {formik.errors.password} </p>
-                )}
-              </div>
+              <input
+                type="password"
+                placeholder="Enter your Password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <button
+                className="toggle-password"
+                onClick={() => setPasswordvisible(!passwordVisible)}
+              >
+                {passwordVisible ? "Hide" : "Show"}
+              </button>
             </div>
             <div className="remember-forgot">
               <label>
@@ -85,7 +84,7 @@ const LoginForm = () => {
             </div>
 
             <div className="btn-submit">
-              <button type="submit" className="btn">
+              <button type="submit" className="btn" onClick={handleLogin}>
                 Login
               </button>
             </div>

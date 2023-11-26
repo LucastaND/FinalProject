@@ -13,41 +13,34 @@ const NavBar = () => {
         </h2>
       </Link>
 
-      {/* <Nav className="navbar-1">
-        <Link to="/home"> Home </Link>
-        <Link to="/about"> About </Link>
-        <Link to="/contact"> Contact </Link>
-      </Nav> */}
-
       <Nav className="navbar-2">
         <Link to="/login">
           <div className="icon-user">
-            <ion-icon name="person-add-sharp"></ion-icon>
+            <h4>
+              <ion-icon name="person-add-sharp"></ion-icon>
+            </h4>
           </div>
         </Link>
-        {/* <Dropdown>
-          <Dropdown.Toggle className="btn-popup">
-            <ion-icon name="person-circle-sharp"></ion-icon>
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu>
-            <Dropdown.Item>
-              <Link to="/login">
-                Login <ion-icon name="log-in-outline"></ion-icon>
-              </Link>
-            </Dropdown.Item>
-             <Dropdown.Item>
-              <Link to="/infor">
-                Profile <ion-icon name="alert-circle-outline"></ion-icon>
-              </Link>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <Link to="/">Logout</Link>
-              <ion-icon name="log-out -outline"></ion-icon>
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown> */}
       </Nav>
+
+      <Dropdown className="navbar-2-login">
+        <Dropdown.Toggle>
+          <div className="icon-user">
+            <ion-icon name="people-circle-outline"></ion-icon>
+          </div>
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item>
+            <Link to="/profile">
+              Profile <ion-icon name="person-circle-outline"></ion-icon>
+            </Link>
+          </Dropdown.Item>
+          <Dropdown.Item>
+            Logout<ion-icon name="log-out-outline"></ion-icon>
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </header>
   );
 };

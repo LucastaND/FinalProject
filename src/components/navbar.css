@@ -8,12 +8,19 @@ header {
   justify-content: space-between;
   align-items: center;
   z-index: 99;
+  border-bottom: #fff 1px solid;
+  background-color: #fff;
+}
+
+h2 {
+  background: -webkit-linear-gradient(135deg, #abdcff 10%, #0396ff 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .navbar-logo {
   position: relative;
   font-size: 1.5em;
-  color: #fff;
   text-decoration: none;
 }
 
@@ -21,14 +28,13 @@ header {
   margin-left: 5px;
   align-items: center;
   text-decoration: none;
+  color: #abdcff;
 }
 
 .navbar-logo h2 {
   outline: none;
   cursor: pointer;
   transition: 0.5s;
-  font-size: 2em;
-  color: #fff;
   font-weight: 500;
   text-decoration: none;
 }
@@ -48,10 +54,10 @@ header {
 .navbar-2 a {
   position: relative;
   font-size: 1em;
-  color: #fff;
   text-decoration: none;
   font-weight: 500;
   margin-left: 40px;
+  color: #abdcff;
 }
 
 /* .navbar-1 a::after {
@@ -100,7 +106,7 @@ icon-icon {
   cursor: pointer;
   transition: 0.5s;
   font-size: 2em;
-  color: #fff;
+  color: #abdcff;
   font-weight: 500;
 }
 

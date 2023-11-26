@@ -32,6 +32,11 @@ const SidebarMenu = ({ children }) => {
       name: "Condition",
       icon: <ion-icon name="help-circle-outline"></ion-icon>,
     },
+    {
+      path: "/concil",
+      name: "Concil",
+      icon: <ion-icon name="albums-outline"></ion-icon>,
+    },
   ];
 
   return (

@@ -6,8 +6,6 @@ export const ForgetForm = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
-      name: "",
-      id: "",
       password: "",
       confirmpw: "",
     },

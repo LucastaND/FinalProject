@@ -1,124 +1,93 @@
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import React from "react";
+import React, { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
+import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Import styles for Quill
+
 import Editor from "ckeditor5-custom-build/build/ckeditor";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+
 import "./projectregis.css";
 
 const ProjectRegistration = () => {
-  const [show, setShow] = useState(false);
+  const [pjname, setPjname] = useState("");
+  const [stid, setStId] = useState("");
+  const [lecturer, setLecturer] = useState("");
+  const [note, setNote] = useState("");
+  const [uploadedFile, setUploadedFile] = useState(null);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const onDrop = useCallback(async (acceptedFiles) => {
+    const file = acceptedFiles[0];
 
-  const formik = useFormik({
-    initialValues: {
-      projectname: "",
-      stuid: "",
-      lecturer: "",
-      note: "",
-    },
-    validationSchema: Yup.object({
-      projectname: Yup.string().required("Required"),
-      stuid: Yup.string()
-        .required("Required")
-        .matches(/^[a-zA-Z\\d*]{8,20}$/, "Please enter a valid student ID"),
-      lecturer: Yup.string().required("Required"),
-      note: Yup.string(),
-    }),
-  });
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await axios.post("/api/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Lưu thông tin file đã tải lên (ví dụ: đường dẫn file)
+      setUploadedFile(response.data.filePath);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  const handleNoteChange = (value) => {
+    setNote(value);
+  };
+
+  const handleSubmit = () => {
+    // Gửi dữ liệu đăng ký lên máy chủ (đối với projectName, studentId, lecturer, note, uploadedFile)
+    // Bạn có thể sử dụng axios.post hoặc fetch API để thực hiện điều này
+  };
+
   return (
     <section className="section-registopic">
       <div className="wrapper-registopic">
         <div className="registopic-form">
           <h1 className="regis-title"> Final Project Registration</h1>
-          <form onSubmit={formik.handleSubmit}>
+          <form>
             <div className="input-box">
               <label htmlFor="name">Project Name: </label>
               <input
-                value={formik.values.projectname}
-                onChange={formik.handleChange}
                 type="text"
-                name="projectname"
-                id="projectname"
+                name="pjname"
+                id="pjname"
+                value={pjname}
+                onChange={(e) => setPjname(e.target.pjname)}
               />
-              {formik.errors.projectname && (
-                <p className="errorMsg">{formik.errors.projectname} </p>
-              )}
             </div>
-            <div className="btn-formadd">
-              <button
-                className="btn-addmb"
-                variant="primary"
-                onClick={handleShow}
-              >
-                Add Member
-              </button>
-              <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Add Member</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <Form>
-                    <Form.Group
-                      className="mb-3"
-                      controlId="exampleForm.ControlInput1"
-                    >
-                      <Form.Label>Student ID</Form.Label>
-                      <Form.Control type="text" autoFocus />
-                    </Form.Group>
-                    <Form.Group
-                      className="mb-3"
-                      controlId="exampleForm.ControlTextarea1"
-                    >
-                      <Form.Label>Example textarea</Form.Label>
-                      <Form.Control as="textarea" rows={3} />
-                    </Form.Group>
-                  </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                  <button variant="secondary" onClick={handleClose}>
-                    Close
-                  </button>
-                  <button variant="primary" onClick={handleClose}>
-                    Save Changes
-                  </button>
-                </Modal.Footer>
-              </Modal>
-            </div>
+
             <div className="input-box">
               <label htmlFor="stuid">Student ID: </label>
               <input
-                value={formik.values.stuid}
-                onChange={formik.handleChange}
                 type="text"
-                name="stuid"
-                id="stuid"
+                name="stid"
+                id="stid"
+                value={stid}
+                onChange={(e) => setStId(e.target.stid)}
               />
-              {formik.errors.stuid && (
-                <p className="errorMsg">{formik.errors.stuid}</p>
-              )}
             </div>
             <div className="input-box">
               <label htmlFor="lecturer">Lecturer: </label>
               <input
-                value={formik.values.lecturer}
-                onChange={formik.handleChange}
                 type="text"
                 name="lecturer"
                 id="lecturer"
+                value={lecturer}
+                onChange={(e) => setLecturer.target.lecturer}
               />
-              {formik.errors.lecturer && (
-                <p className="errorMsg">{formik.errors.lecturer}</p>
-              )}
             </div>
             <div className="input-box">
               <label htmlFor="note">Note:</label>
-              <CKEditor
+              <ReactQuill value={note} onChange={handleNoteChange} />
+              {/* <CKEditor
                 className="ckedit"
                 editor={Editor}
                 data=""
@@ -135,10 +104,26 @@ const ProjectRegistration = () => {
                 onFocus={(event, editor) => {
                   console.log("Focus.", editor);
                 }}
-              />
+              /> */}
             </div>
+            <div
+              {...getRootProps()}
+              style={{
+                border: "1px dashed #ccc",
+                padding: "20px",
+                marginTop: "20px",
+              }}
+            >
+              <input {...getInputProps()} />
+              <p>Drag & drop a file here, or click to select a file</p>
+            </div>
+            {uploadedFile && <p>File uploaded: {uploadedFile}</p>}
             <div className="btn-submit">
-              <button className="btn-regis" type="submit">
+              <button
+                className="btn-regis"
+                type="submit"
+                onClick={handleSubmit}
+              >
                 Registration
               </button>
             </div>
